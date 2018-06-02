@@ -28,32 +28,55 @@
  </style>
 </head>
 <body>
+
  <h1>Contoso Web Developer Conference</h1>
  <h2>Finding elements using jQuery</h2>
  <div>This session is about identifying elements using jQuery methods and selectors.</div>
  <h3>Rate this session</h3>
- <div id="rating-container">
-  <div class="rating-circle"></div>
-  <div class="rating-circle"></div>
-  <div class="rating-circle"></div>
-  <div class="rating-circle"></div>
-  <div class="rating-circle"></div>
- </div>
+ 
+ 
 
 <br>
 <br>
- <div id="rating-container" max-value="5"></div>
+ <div id="rating-container" max-value="5">
+        <div class = "rating-circle"></div>
+        <div class = "rating-circle"></div>
+        <div class = "rating-circle"></div>
+        <div class = "rating-circle"></div>
+        <div class = "rating-circle"></div>
+ </div>
+  
+<div>
+    <br>
+    
+  <div>
+        <button type="button" id="save-rating">Save rating</button>
+  </div>
+  <br>
+  <br>
+  <div id="output"></div>
+
+</div>
 
  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"></script>
-
  <script>
         // your answer would go here
-$(function(){
+    $(function() {
+        var ratingcontainer = $('#rating-container');  
 
+        $('#update-max-value').click(function(){
 
+        var ratingamount = $('#max-value').val();            
+            ratingcontainer.html('');
+
+        for ( var i = 0; i < ratingamount; i++)
+        {
+            ratingcontainer = ratingcontainer.append('<div class = "rating-circle"></div>');
+         }
+    });
 
         var lastClicked=null;
-            $('.rating-circle').hover(function(){
+        ratingcontainer.delegate('.rating-circle', 'mouseover', function(){
                 if(lastClicked){
                     lastClicked.prevAll().removeClass('rating-chosen');
                     lastClicked.removeClass('rating-chosen');
@@ -62,7 +85,8 @@ $(function(){
                 $(this).addClass('rating-hover');
             });
 
-        $('.rating-circle').mouseout(function(){
+
+          ratingcontainer.delegate('.rating-circle', 'mouseout', function(){
             $('.rating-circle').removeClass('rating-hover');
             if(lastClicked){
                 lastClicked.prevAll().addClass('rating-chosen');
@@ -70,13 +94,26 @@ $(function(){
             }
         });
 
-        $('.rating-circle').click(function(){
+        ratingcontainer.delegate('.rating-circle', 'click', function(){     
             lastClicked=$(this);
             lastClicked.prevAll().addClass('rating-chosen');
             lastClicked.addClass('rating-chosen');
-        }); 
-
+        });
+    $('#save-rating').click(function(){
+                          
+        $('.rating-chosen').each(function(){
+            var sum = $('.rating-chosen').length    
+            var userReview ={
+                value: sum,
+                maxValue : $('#rating-container').attr('max-value')
+            }
+        $.post('http://jquery-edx.azurewebsites.net/api/Rating', userReview).done(function(data){
+            $('#output').text(data.message);
+        });
+    });  
+        
     });
+    });        
  </script>
 </body>
 </html>
