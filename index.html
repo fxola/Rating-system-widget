@@ -107,7 +107,7 @@
                 value: sum,
                 maxValue : $('#rating-container').attr('max-value')
             }
-        $.post('http://jquery-edx.azurewebsites.net/api/Rating', userReview).done(function(data){
+        $.post('https://jquery-edx.azurewebsites.net/api/Rating', userReview).done(function(data){
             $('#output').text(data.message);
         });
     });  
