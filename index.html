@@ -1,57 +1,70 @@
 <html>
 <head>
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
  <style>
   body {
-   font-family: Verdana;
+   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+   background: linear-gradient(to right, rgb(0, 77, 81), rgb(71, 20, 101));
+   color: white;
   }
-  h1, h2, h3 {
-   color: darkblue;
+ 
+  .fa-star{
+      color:#ffee92;
+      font-weight: 800;
+      margin: 1em 0;
   }
-  .rating-circle {
-   height: 2em;
-   width: 2em;
-   border: .1em solid black;
-   border-radius: 1.1em;
-   display: inline-block;
-   margin: 0;
-   padding: .1em;
-  }
+
 
   .rating-hover {
-   background-color: yellow;
-  }
+   color: gold;
 
-  .rating-chosen {
-   background-color: green;
   }
+button{
+    outline: none;
+    border:none;
+    background-image: linear-gradient(to right,#f145d4,rgb(6, 37, 49)); 
+    color: white;
+    padding: .7em 1em .7em 1em;
+    font-weight:700;
+    font-size: 1.1em;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    cursor: pointer;
+    border-radius: 5em;
+
+}
+button:hover{
+    background-image: linear-gradient(to right,rgb(6, 37, 49),#88050bf5); 
+}
+
+#rating-container,.save,#output,h1{
+    text-align: center;
+}
+#output{
+    font-size: 3em;
+}
+.rating-chosen {
+   color:#ffb300;
+}
  </style>
  <title>Rating system widget</title>
 </head>
 <body>
 
- <h1>Contoso Web Developer Conference</h1>
- <h2>Finding elements using jQuery</h2>
- <div>This session is about identifying elements using jQuery methods and selectors.</div>
- <h3>Rate this session</h3>
- 
- 
-
-<br>
-<br>
+<h1>Rating Widget</h1>
  <div id="rating-container" max-value="5">
-        <div class = "rating-circle"></div>
-        <div class = "rating-circle"></div>
-        <div class = "rating-circle"></div>
-        <div class = "rating-circle"></div>
-        <div class = "rating-circle"></div>
+        <i class="fas fa-star fa-4x"></i>
+        <i class="fas fa-star fa-4x"></i>
+        <i class="fas fa-star fa-4x"></i>
+        <i class="fas fa-star fa-4x"></i>
+        <i class="fas fa-star fa-4x"></i>
  </div>
-  
-<div>
-    <br>
+
+
+
     
-  <div>
-        <button type="button" id="save-rating">Save rating</button>
+  <div class="save">
+        <button type="button" id="save-rating">Save Rating</button>
   </div>
   <br>
   <br>
@@ -72,12 +85,12 @@
 
         for ( var i = 0; i < ratingamount; i++)
         {
-            ratingcontainer = ratingcontainer.append('<div class = "rating-circle"></div>');
+            ratingcontainer = ratingcontainer.append('<div class = ".fa-star"></div>');
          }
     });
 
         var lastClicked=null;
-        ratingcontainer.delegate('.rating-circle', 'mouseover', function(){
+        ratingcontainer.delegate('.fa-star', 'mouseover', function(){
                 if(lastClicked){
                     lastClicked.prevAll().removeClass('rating-chosen');
                     lastClicked.removeClass('rating-chosen');
@@ -87,15 +100,15 @@
             });
 
 
-          ratingcontainer.delegate('.rating-circle', 'mouseout', function(){
-            $('.rating-circle').removeClass('rating-hover');
+          ratingcontainer.delegate('.fa-star', 'mouseout', function(){
+            $('.fa-star').removeClass('rating-hover');
             if(lastClicked){
                 lastClicked.prevAll().addClass('rating-chosen');
                 lastClicked.addClass('rating-chosen');
             }
         });
 
-        ratingcontainer.delegate('.rating-circle', 'click', function(){     
+        ratingcontainer.delegate('.fa-star', 'click', function(){     
             lastClicked=$(this);
             lastClicked.prevAll().addClass('rating-chosen');
             lastClicked.addClass('rating-chosen');
